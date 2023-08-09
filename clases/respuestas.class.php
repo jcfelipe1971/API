@@ -7,6 +7,13 @@ class respuestas{
         "result" => array()
     ];
 
+    public function okcod_seccion($valor)
+     {
+      $this->response['status'] = "ok";
+      $this->response['result'] = array( "cod_seccion" => $valor);
+      return $this->response;
+     }
+
 
     public function error_405(){
         $this->response['status'] = "error";

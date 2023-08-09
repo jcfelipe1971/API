@@ -14,7 +14,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
     //enviamos los datos al manejador
     $datosArray = $_entrada->login($postBody);
-
+print_r($datosArray);
     //delvolvemos una respuesta
     header('Content-Type: application/json');
     if(isset($datosArray["result"]["error_id"])){

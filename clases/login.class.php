@@ -8,12 +8,12 @@ class entrada extends conexion{
     public function login($json)
      {
       
-        $_respustas = new respuestas;
+        $_respuestas = new respuestas;
         $datos = json_decode($json,true);
         if(!isset($datos['usuario']) || !isset($datos["clave"]))
          {
           //faltan datos
-          return $_respustas->error_400();
+          return $_respuestas->error_400();
          }
         else
          {
@@ -21,6 +21,7 @@ class entrada extends conexion{
           $usuario = $datos['usuario'];
           $clave = $datos['clave'];
           $datos = $this->obtenerDatosUsuario($usuario);
+
           if($datos)
            {
             //verificar si la contraseña es igual
@@ -28,25 +29,25 @@ class entrada extends conexion{
              {
               if($datos[0]['Estado'] == "Activo")
                {
-                $result = $_respustas->response;
+                $result = $_respuestas->okcod_seccion($datos[0]['cod_seccion']);
                 return $result;
                }
               else
                {
                 //el usuario esta inactivo
-                return $_respustas->error_200("El usuario esta inactivo");
+                return $_respuestas->error_200("El usuario esta inactivo");
                }
               }
              else
               {
                //la contraseña no es igual
-               return $_respustas->error_200("Clave es incorrecta");
+               return $_respuestas->error_200("Clave es incorrecta");
               }
             }
            else
             {
              //no existe el usuario
-             return $_respustas->error_200("El usuaro $usuario  no existe ");
+             return $_respuestas->error_200("El usuaro $usuario  no existe ");
             }
         }//if(!isset($datos['usuario']) || !isset($datos["clave"]))
      }//public function login($json)
@@ -54,7 +55,7 @@ class entrada extends conexion{
 
 
     private function obtenerDatosUsuario($usuario){
-        $query = "SELECT UsuarioId,clave,Estado FROM usuarios WHERE Usuario = '$usuario'";
+        $query = "SELECT UsuarioId,clave,Estado,cod_seccion FROM usuarios WHERE Usuario = '$usuario'";
         $datos = parent::obtenerDatos($query);
         if(isset($datos[0]["UsuarioId"])){
             return $datos;

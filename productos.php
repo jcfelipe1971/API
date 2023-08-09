@@ -6,21 +6,36 @@ $_respuestas = new respuestas;
 $_productos = new productos;
 
 
-if($_SERVER['REQUEST_METHOD'] == "GET"){
-
-    if(isset($_GET["page"])){
-        $pagina = $_GET["page"];
-        $listaProductos = $_productos->listaProductos($pagina);
-        header("Content-Type: application/json");
-        echo json_encode($listaProductos);
-        http_response_code(200);
-    }else if(isset($_GET['id'])){
-        $cod_arti = $_GET['id'];
-        $DatosProductos = $_productos->ObtenerProductos($cod_arti); 
+if($_SERVER['REQUEST_METHOD'] == "GET")
+ {
+  if(isset($_GET["page"]))
+   {
+    $pagina = $_GET["page"];
+    $listaProductos = $_productos->listaProductos($pagina);
+    header("Content-Type: application/json");
+    echo json_encode($listaProductos);
+    http_response_code(200);
+   }
+  else
+   if(isset($_GET['id']))
+    {
+      $cod_arti = $_GET['id'];
+      $DatosProductos = $_productos->ObtenerProductos($cod_arti); 
+      header("Content-Type: application/json");
+      echo json_encode($DatosProductos);
+      http_response_code(200);
+    }
+    else 
+      if(isset($_GET['fecha']))
+       {
+        $fecha = $_GET['fecha'];
+        
+        $DatosProductos = $_productos->DameProductosFecha($fecha); 
         header("Content-Type: application/json");
         echo json_encode($DatosProductos);
         http_response_code(200);
-    }
+       }
+
     
 }else if($_SERVER['REQUEST_METHOD'] == "POST"){
     //recibimos los datos enviados

@@ -28,11 +28,15 @@ class productos extends conexion {
     }
 
     public function ObtenerProductos($id){
-        $query = "SELECT * FROM " . $this->table . " WHERE 
-        cod_arti = '$id'";
+        $query = "SELECT * FROM " . $this->table . " WHERE cod_arti = '$id'";
         return parent::obtenerDatos($query);
-
     }
+
+    public function DameProductosFecha($fecha){
+      $query = "SELECT * FROM " . $this->table . " WHERE fecha > $fecha";
+      return parent::obtenerDatos($query);
+    }
+
 
     //******  INSERTAR  ( POST ) ***********************
     public function post($json){
